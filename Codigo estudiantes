@@ -1,0 +1,78 @@
+#include <stdio.h>
+
+// Estructura para representar las calificaciones de un estudiante
+struct Calificaciones {
+    float nota1;
+    float nota2;
+    float nota3;
+};
+
+// Estructura para representar a un estudiante
+struct Estudiante {
+    char nombre[50];
+    int codigoEstudiante;
+    struct Calificaciones calif;
+};
+
+// Funcion para calcular el promedio de las notas de un estudiante
+float calcularPromedio(struct Calificaciones calif) {
+    return (calif.nota1 + calif.nota2 + calif.nota3) / 3.0;
+}
+
+int main() {
+    // Crear tres estudiantes de ejemplo
+    struct Estudiante estudiantes[3] = {
+        {"Estudiante1", 101, {90.5, 85.0, 78.3}},
+        {"Estudiante2", 102, {75.2, 88.5, 92.0}},
+        {"Estudiante3", 103, {82.0, 79.5, 88.7}}
+    };
+
+    // Menu de opciones para el estudiante
+    int opcion;
+    printf("Ingrese su numero de estudiante (101, 102, 103): ");
+    scanf("%d", &opcion);
+
+    // Verificar si el numero de estudiante es valido
+    if (opcion < 101 || opcion > 103) {
+        printf("Numero de estudiante no valido.\n");
+        return 1; 
+    }
+
+    // Obtener el indice correspondiente al estudiante seleccionado
+    int indiceEstudiante = opcion - 101;
+
+    // Menu de opciones para el estudiante
+    printf("\nMenu de opciones para %s:\n", estudiantes[indiceEstudiante].nombre);
+    printf("A. Consultar notas\n");
+    printf("B. Conocer promedio\n");
+
+    // Leer la opcion del estudiante
+    char opcionEstudiante;
+    printf("Ingrese la opcion deseada (A/B): ");
+    scanf(" %c", &opcionEstudiante);
+
+    // Procesar la opcion seleccionada
+    switch (opcionEstudiante) {
+        case 'A':
+        case 'a':
+            // Mostrar las notas del estudiante
+            printf("\nNotas de %s:\n", estudiantes[indiceEstudiante].nombre);
+            printf("Nota 1: %.2f\n", estudiantes[indiceEstudiante].calif.nota1);
+            printf("Nota 2: %.2f\n", estudiantes[indiceEstudiante].calif.nota2);
+            printf("Nota 3: %.2f\n", estudiantes[indiceEstudiante].calif.nota3);
+            break;
+
+        case 'B':
+        case 'b':
+            // Calcular y mostrar el promedio del estudiante
+            printf("\nPromedio de %s: %.2f\n", estudiantes[indiceEstudiante].nombre,
+                   calcularPromedio(estudiantes[indiceEstudiante].calif));
+            break;
+
+        default:
+            printf("Opcion no valida.\n");
+            break;
+    }
+
+    return 0; // Salir del programa sin errores
+}
